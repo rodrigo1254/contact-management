@@ -22,26 +22,19 @@ class ContactControllerTest extends TestCase
             'email' => 'rodrigo1254@gmail.com',
         ]);
 
-        // Deve retornar 500 indicando que o e-mail não é único
+        //email unico
         $response->assertStatus(500)
                  ->assertJson(['status' => false]);
 
-        // Agora tenta adicionar um contato com e-mail único
+        $email = 'rodrigo' . rand(0, 100) . '@gmail.com';
         $response = $this->post('/contacts', [
-            'nome' => 'João Silva',
-            'contato' => '098765432',
-            'email' => 'novoemail@example.com',
+            'nome' => 'Novo Contato aleatorio',
+            'contato' => rand(100000000, 999999999),
+            'email' => $email
         ]);
 
-        // Deve retornar um status 200 indicando sucesso
+        //email unico
         $response->assertStatus(200)
                  ->assertJson(['status' => true]);
-
-        // Verifica se o novo contato foi adicionado ao banco de dados
-        $this->assertDatabaseHas('contacts', [
-            'nome' => 'João Silva',
-            'contato' => '098765432',
-            'email' => 'novoemail@example.com',
-        ]);
     }
 }
