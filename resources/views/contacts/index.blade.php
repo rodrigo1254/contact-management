@@ -8,10 +8,11 @@
 
     <!-- Botão Adicionar (agora verde) -->
     <div class="text-right mb-3">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarContatoModal">
-            Adicionar Contato
-        </button>
         @if (Auth::check())
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarContatoModal">
+                Adicionar Contato
+            </button>
+            
             <!-- Botão "Sair" -->
             <a href="{{ route('logout') }}" class="btn btn-danger ml-2"
             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -48,16 +49,46 @@
                     <td>{{ $contact->email }}</td>
                     <td>
                     @if (Auth::check())
-                    
+                        <!-- Botões para usuários logados -->
                         <button class="btn btn-danger" onclick="excluirContato({{ $contact->id }})">Excluir</button>
                         <button class="btn btn-info" onclick="carregarEditarContato({{ $contact->id }})" data-toggle="modal" data-target="#adicionarEditarContatoModal">Editar</button>
+                        <button class="btn btn-secondary" onclick="verContato({{ $contact->id }})" data-toggle="modal" data-target="#verContatoModal">Ver</button>
+                    @else
+                        <!-- Botão "Ver" para usuários não logados -->
+                        <button class="btn btn-secondary" onclick="verContato({{ $contact->id }})" data-toggle="modal" data-target="#verContatoModal">Ver</button>
                     @endif
+
+                    
                     </td>
                    
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    <!-- Modal Ver Contato -->
+    <div class="modal fade" id="verContatoModal" tabindex="-1" role="dialog" aria-labelledby="verContatoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verContatoModalLabel">Detalhes do Contato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="detalhesContato">
+                    <!-- Aqui você pode exibir os detalhes do contato -->
+                    <p>Nome: <span id="detalhesNome"></span></p>
+                    <p>Contato: <span id="detalhesContato"></span></p>
+                    <p>E-mail: <span id="detalhesEmail"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Modal de Login -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -170,6 +201,30 @@
             } else {
                 alert('Por favor, preencha todos os campos corretamente.');
             }
+        }
+
+        function verContato(id) {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+            url: '/contacts/' + id,
+            type: 'GET',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            success: function(response) {
+                $('#detalhesNome').text(response.contact.nome);
+                $('#detalhesContato').text(response.contact.contato);
+                $('#detalhesEmail').text(response.contact.email);
+                
+                // Exibe a modal
+                $('#verContatoModal').modal('show');
+            },
+            error: function(error) {
+                console.log(error);
+            }
+            });
+            
         }
 
         function carregarEditarContato(contatoId) {
