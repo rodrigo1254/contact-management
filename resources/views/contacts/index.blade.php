@@ -35,9 +35,13 @@
                     <td>{{ $contact->contato }}</td>
                     <td>{{ $contact->email }}</td>
                     <td>
+                    @if (Auth::check())
+                    
                         <button class="btn btn-danger" onclick="excluirContato({{ $contact->id }})">Excluir</button>
                         <button class="btn btn-info" onclick="carregarEditarContato({{ $contact->id }})" data-toggle="modal" data-target="#adicionarEditarContatoModal">Editar</button>
+                    @endif
                     </td>
+                   
                 </tr>
             @endforeach
         </tbody>

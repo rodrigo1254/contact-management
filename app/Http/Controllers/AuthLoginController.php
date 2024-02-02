@@ -16,9 +16,13 @@ class AuthLoginController extends Controller
             // Modificar a variável de ambiente aqui
             // Exemplo: config(['app.authenticated' => true]);
             return response()->json(['message' => 'Autenticação bem-sucedida'], 200);
+            if (Auth::check()) {
+                // Existe alguém logado, você pode fazer algo aqui
+                return response()->json(['message' => 'Autenticação bem-sucedida'], 200);
+            }
         } else {
             // Falha na autenticação
-            return response()->json(['message' => 'Credenciais inválidas'], 401);
+            return redirect()->route('contacts.index')->with('error', 'Credenciais inválidas');
         }
     }
 }
