@@ -79,6 +79,93 @@
 
 @section('scripts')
     <script>
-        // Seus scripts aqui
+        function salvarContato() {
+            // Validação básica no lado do cliente
+            if ($('#formAdicionarContato')[0].checkValidity()) {
+                // Dados do formulário
+                var dados = {
+                    nome: $('#nome').val(),
+                    contato: $('#contato').val(),
+                    email: $('#email').val()
+                };
+
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                var url = '/contacts';
+
+                var contatoId = $('#contatoId').val();
+                if (contatoId) {
+                    url += '/' + contatoId;
+                }
+
+                // Requisição Ajax usando jQuery
+                $.ajax({
+                    url: url,
+                    type: contatoId ? 'PUT' : 'POST',
+                    data: dados,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    success: function (response) {
+                        $('#adicionarContatoModal').modal('hide');
+                        $('#btnAction').text('Salvar');
+
+                        window.location.reload();
+                    },
+                    error: function (error) {
+                        alert('Erro ao salvar o contato.');
+                        console.log(error);
+                    }
+                });
+            } else {
+                alert('Por favor, preencha todos os campos corretamente.');
+            }
+        }
+
+        function carregarEditarContato(contatoId) {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+            url: '/contacts/' + contatoId,
+            type: 'GET',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            success: function(response) {
+                $('#contatoId').val(response.contact.id);
+                $('#nome').val(response.contact.nome);
+                $('#contato').val(response.contact.contato);
+                $('#email').val(response.contact.email);
+
+                $('#btnAction').text('Atualizar');
+                $('#adicionarContatoModal').modal('show');
+            },
+            error: function(error) {
+                console.log(error);
+            }
+            });
+        }
+
+
+        //Funcao para realizar exclusao
+        function excluirContato(id) {
+            if (confirm("Tem certeza que deseja excluir este contato?")) {
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                url: '/contacts/' + id,
+                type: 'DELETE',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                success: function(response) {
+                    alert('Exclusão realizadao com sucesso!!!');
+                    window.location.reload();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+                });
+            }
+        }
     </script>
 @endsection
