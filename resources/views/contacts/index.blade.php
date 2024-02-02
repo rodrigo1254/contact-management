@@ -142,6 +142,8 @@
                 success: function (response) {
                     $('#adicionarContatoModal').modal('hide');
                     $('#btnAction').text('Salvar');
+
+                    window.location.reload();
                 },
                 error: function (error) {
                     alert('Erro ao salvar o contato.');
@@ -177,11 +179,26 @@
 	    });
 	}
 
-    // Função de exemplo para excluir um contato (pode ser substituída por sua lógica real)
+
+    //Funcao para realizar exclusao
     function excluirContato(id) {
         if (confirm("Tem certeza que deseja excluir este contato?")) {
-            // Lógica para excluir o contato (pode ser chamada de uma API, por exemplo)
-            alert("Contato excluído com sucesso!");
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+            url: '/contacts/' + contatoId,
+            type: 'DELETE',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            success: function(response) {
+                alert('Exclusão realizadao com sucesso!!!');
+                window.location.reload();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+            });
         }
     }
 </script>
