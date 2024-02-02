@@ -58,8 +58,8 @@
             @foreach ($contacts as $contact)
                 <tr class="contato-item">
                     <td>{{ $contact->id }}</td>
-                    <td>{{ $contact->name }}</td>
-                    <td>{{ $contact->phone }}</td>
+                    <td>{{ $contact->nome }}</td>
+                    <td>{{ $contact->contato }}</td>
                     <td>{{ $contact->email }}</td>
                     <td>
                         <button class="btn btn-danger" onclick="excluirContato({{ $contact->id }})">Excluir</button>
@@ -126,7 +126,7 @@
 
             // Requisição Ajax usando jQuery
             $.ajax({
-                url: '/',
+                url: '/contacts',
                 type: 'POST',
                 data: dados,
                 headers: {
@@ -148,7 +148,7 @@
     function carregarEditarContato(contatoId) {
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
 	    $.ajax({
-		url: '/' + contatoId,
+		url: '/contacts/' + contatoId,
 		type: 'GET',
 		dataType: 'json',
         headers: {

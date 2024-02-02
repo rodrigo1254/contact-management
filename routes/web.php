@@ -19,3 +19,6 @@ use App\Http\Controllers\ContactController;
 });*/
 
 Route::resource('/', ContactController::class);
+
+Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
+Route::resource('contacts', ContactController::class)->except(['index']);

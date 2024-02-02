@@ -32,9 +32,17 @@ class ContactController extends Controller
             return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
         }
         
-
-        
         return redirect()->route('contacts.index')->with('success', 'Contato criado com sucesso!');
+    }
+
+    public function show($id)
+    {
+        try{
+            $contact = Contact::findOrFail($id);
+            return response()->json(['status' => true, 'contact' => $contact],200);
+        }catch (\Exception $e){
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 
     public function edit(Contact $contact)
