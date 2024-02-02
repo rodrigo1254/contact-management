@@ -84,6 +84,7 @@
             <div class="modal-body">
                 <!-- Campos do Formulário com validações HTML5 -->
                 <form id="formAdicionarContato">
+                    <input type="hidden" class="form-control" id="contatoId">
                     <div class="form-group">
                         <label for="nome">Nome:</label>
                         <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome" required minlength="5">
@@ -100,7 +101,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" onclick="salvarContato()">Salvar</button>
+                <button type="button" class="btn btn-primary" id="btnAction" onclick="salvarContato()">Salvar</button>
             </div>
         </div>
     </div>
@@ -123,11 +124,17 @@
             };
 
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            var url = '/contacts';
+
+            var contatoId = $('#contatoId').val();
+            if (contatoId) {
+                url += '/' + contatoId;
+            }
 
             // Requisição Ajax usando jQuery
             $.ajax({
-                url: '/contacts',
-                type: 'POST',
+                url: url,
+                type: contatoId ? 'PUT' : 'POST',
                 data: dados,
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
@@ -155,12 +162,12 @@
             'X-CSRF-TOKEN': csrfToken
         },
 		success: function(response) {
-		    $('#contatoId').val(response.id);
-		    $('#nome').val(response.nome);
-            $('#contato').val(response.contato);
-            $('#email').val(response.email);
+		    $('#contatoId').val(response.contact.id);
+		    $('#nome').val(response.contact.nome);
+            $('#contato').val(response.contact.contato);
+            $('#email').val(response.contact.email);
 
-		    $('#contatoForm button').text('Atualizar');
+		    $('#btnAction').text('Atualizar');
 		    $('#adicionarContatoModal').modal('show');
 		},
 		error: function(error) {
