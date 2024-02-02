@@ -1,18 +1,19 @@
 @extends('layout')
 
-@section('title', 'Lista de Contatos')
-
 @section('content')
+    <!-- Box do Título "Lista de Contatos" -->
     <div class="titulo-box">
         <h2>Lista de Contatos</h2>
     </div>
 
+    <!-- Botão Adicionar (agora verde) -->
     <div class="text-right mb-3">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarContatoModal">
             Adicionar Contato
         </button>
     </div>
 
+    <!-- Tabela de Contatos -->
     <table class="table contatos-grid">
         <thead>
             <tr>
@@ -74,96 +75,10 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
     <script>
-        function salvarContato() {
-            // Validação básica no lado do cliente
-            if ($('#formAdicionarContato')[0].checkValidity()) {
-                // Dados do formulário
-                var dados = {
-                    nome: $('#nome').val(),
-                    contato: $('#contato').val(),
-                    email: $('#email').val()
-                };
-
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                var url = '/contacts';
-
-                var contatoId = $('#contatoId').val();
-                if (contatoId) {
-                    url += '/' + contatoId;
-                }
-
-                // Requisição Ajax usando jQuery
-                $.ajax({
-                    url: url,
-                    type: contatoId ? 'PUT' : 'POST',
-                    data: dados,
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    success: function (response) {
-                        $('#adicionarContatoModal').modal('hide');
-                        $('#btnAction').text('Salvar');
-
-                        window.location.reload();
-                    },
-                    error: function (error) {
-                        alert('Erro ao salvar o contato.');
-                        console.log(error);
-                    }
-                });
-            } else {
-                alert('Por favor, preencha todos os campos corretamente.');
-            }
-        }
-
-        function carregarEditarContato(contatoId) {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            $.ajax({
-            url: '/contacts/' + contatoId,
-            type: 'GET',
-            dataType: 'json',
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            },
-            success: function(response) {
-                $('#contatoId').val(response.contact.id);
-                $('#nome').val(response.contact.nome);
-                $('#contato').val(response.contact.contato);
-                $('#email').val(response.contact.email);
-
-                $('#btnAction').text('Atualizar');
-                $('#adicionarContatoModal').modal('show');
-            },
-            error: function(error) {
-                console.log(error);
-            }
-            });
-        }
-
-        function excluirContato(id) {
-            if (confirm("Tem certeza que deseja excluir este contato?")) {
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                url: '/contacts/' + id,
-                type: 'DELETE',
-                dataType: 'json',
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                success: function(response) {
-                    alert('Exclusão realizadao com sucesso!!!');
-                    window.location.reload();
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-                });
-            }
-        }
+        // Seus scripts aqui
     </script>
 @endsection
