@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AuthLoginController;
 
 
 /*
@@ -25,4 +25,4 @@ Route::resource('/', ContactController::class);
 Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
 Route::resource('contacts', ContactController::class)->except(['index']);
 
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/login', [AuthLoginController::class, 'login'])->name('login');
