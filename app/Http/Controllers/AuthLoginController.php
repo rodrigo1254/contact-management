@@ -9,16 +9,21 @@ class AuthLoginController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        try{
+            $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            if (Auth::check()) {
-                return redirect('/');
+            if (Auth::attempt($credentials)) {
+                if (Auth::check()) {
+                    return response()->json(['message' => 'Autenticação bem-sucedida'], 200);
+                }
+            } else {
+                return response()->json(['status' => false],500);
             }
-        } else {
-            // Falha na autenticação
-            return redirect()->route('contacts.index')->with('error', 'Credenciais inválidas');
+            
+        }catch (\Exception $e){
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
         }
+
     }
 
     public function logout(Request $request)
