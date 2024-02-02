@@ -288,11 +288,11 @@
                 },
                 success: function(response) {
                     // Sucesso na autenticação, faça o que for necessário aqui
-                    console.log(response);
+                    window.location.reload();
                 },
                 error: function(error) {
-                    // Falha na autenticação, manipule o erro aqui
-                    console.log(error);
+                    alert('falha na autenticação');
+                    $('#loginModal').modal('hide');
                 }
             });
         }
