@@ -19,7 +19,9 @@ use App\Http\Controllers\ContactController;
 });*/
 
 /* Rota para visualizar a lista de contatos */
-Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
+//Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
 
 /* Rotas para as operações CRUD de contatos (Create, Read, Update, Delete) */
 Route::resource('contacts', ContactController::class)->except(['index']);
