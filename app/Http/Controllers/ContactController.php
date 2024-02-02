@@ -55,7 +55,7 @@ class ContactController extends Controller
         try{
             $request->validate([
                 'nome' => 'required|min:5',
-                'contato' => 'required|digits:9|unique:contacts',
+                'contato' => 'required|digits:9|unique:contacts,contato,' . $contact->id,
                 'email' => 'required|email|unique:contacts,email,' . $contact->id,
             ]);
             $data = $contact->update($request->all());
