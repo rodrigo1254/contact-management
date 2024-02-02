@@ -59,11 +59,11 @@
                         @csrf
                         <div class="form-group">
                             <label for="email">E-mail:</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Digite o e-mail" required>
+                            <input autocomplete="off" value="rodrigo1254@gmail.com" type="email" class="form-control" id="email" name="email" placeholder="Digite o e-mail" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Senha:</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Digite a senha" required>
+                            <input autocomplete="off" value="123456" type="password" class="form-control" id="password" name="password" placeholder="Digite a senha" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Entrar</button>
                     </form>
