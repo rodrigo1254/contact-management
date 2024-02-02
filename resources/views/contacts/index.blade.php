@@ -102,17 +102,16 @@
                 </div>
                 <div class="modal-body">
                     <!-- Formulário de Login -->
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+                    <form id="loginForm" autocomplete="off">
                         <div class="form-group">
                             <label for="email">E-mail:</label>
-                            <input autocomplete="off" value="rodrigo1254@gmail.com" type="email" class="form-control" id="emailLogin" name="email" placeholder="Digite o e-mail" required>
+                            <input value="rodrigo1254@gmail.com" type="email" class="form-control" id="emailLogin" name="email" placeholder="Digite o e-mail" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Senha:</label>
-                            <input autocomplete="off" value="123456" type="password" class="form-control" id="password" name="password" placeholder="Digite a senha" required>
+                            <input value="123456" type="password" class="form-control" id="password" name="password" placeholder="Digite a senha" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Entrar</button>
+                        <button type="button" class="btn btn-primary" onclick="submitLoginForm()">Entrar</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -272,6 +271,30 @@
                 }
                 });
             }
+        }
+
+        function submitLoginForm() {
+            var email = $('#emailLogin').val();
+            var password = $('#password').val();
+
+            // Requisição AJAX
+            $.ajax({
+                url: '/login', // Altere para o endpoint correto
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'email': email,
+                    'password': password
+                },
+                success: function(response) {
+                    // Sucesso na autenticação, faça o que for necessário aqui
+                    console.log(response);
+                },
+                error: function(error) {
+                    // Falha na autenticação, manipule o erro aqui
+                    console.log(error);
+                }
+            });
         }
     </script>
 @endsection
