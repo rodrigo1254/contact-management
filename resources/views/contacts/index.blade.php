@@ -11,6 +11,9 @@
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarContatoModal">
             Adicionar Contato
         </button>
+        <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#loginModal">
+            Login
+        </button>
     </div>
 
     <!-- Tabela de Contatos -->
@@ -40,6 +43,38 @@
         </tbody>
     </table>
 
+    <!-- Modal de Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulário de Login -->
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="email">E-mail:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Digite o e-mail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Senha:</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Digite a senha" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Adicionar Contato -->
     <div class="modal fade" id="adicionarContatoModal" tabindex="-1" role="dialog" aria-labelledby="adicionarContatoModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -60,7 +95,7 @@
                         </div>
                         <div class="form-group">
                             <label for="contato">Contato:</label>
-                            <input type="text" class="form-control" id="contato" name="contato" placeholder="Digite o contato" required pattern="\d{9}">
+                            <input type="tel" class="form-control" id="contato" name="contato" placeholder="Digite o contato" required pattern="\d{9}" maxlength="9" inputmode="numeric">
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail:</label>
