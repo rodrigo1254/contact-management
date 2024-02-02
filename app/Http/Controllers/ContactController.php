@@ -52,14 +52,18 @@ class ContactController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
-        $request->validate([
-            'nome' => 'required|min:5',
-            'contato' => 'required|digits:9',
-            'email' => 'required|email|unique:contacts,email,' . $contact->id,
-        ]);
 
-        $contact->update($request->all());
-        return redirect()->route('contacts.index')->with('success', 'Contato atualizado com sucesso!');
+        try{
+            $request->validate([
+                'nome' => 'required|min:5',
+                'contato' => 'required|digits:9',
+                'email' => 'required|email|unique:contacts,email,' . $contact->id,
+            ]);
+            $data = $contact->update($request->all());
+            return response()->json(['status' => true, 'contact' => $data],200);
+        }catch (\Exception $e){
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 
     public function destroy(Contact $contact)

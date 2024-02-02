@@ -141,6 +141,7 @@
                 },
                 success: function (response) {
                     $('#adicionarContatoModal').modal('hide');
+                    $('#btnAction').text('Atualizar');
                 },
                 error: function (error) {
                     alert('Erro ao salvar o contato.');
