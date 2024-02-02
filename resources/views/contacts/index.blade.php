@@ -161,7 +161,7 @@
             $('#email').val(response.email);
 
 		    $('#contatoForm button').text('Atualizar');
-		    $('#adicionarEditarContatoModal').modal('show');
+		    $('#adicionarContatoModal').modal('show');
 		},
 		error: function(error) {
 		    console.log(error);
