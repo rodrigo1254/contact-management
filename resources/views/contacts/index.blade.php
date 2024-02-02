@@ -1,12 +1,10 @@
 @extends('layout')
 
 @section('content')
-    <!-- Box do Título "Lista de Contatos" -->
     <div class="titulo-box">
         <h2>Lista de Contatos</h2>
     </div>
 
-    <!-- Botão Adicionar (agora verde) -->
     <div class="text-right mb-3">
         @if (Auth::check())
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarContatoModal">
@@ -72,7 +70,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Aqui você pode exibir os detalhes do contato -->
                     <p>Nome: <span id="detalhesNome"></span></p>
                     <p>Contato: <span id="detalhesContato"></span></p>
                     <p>E-mail: <span id="detalhesEmail"></span></p>
