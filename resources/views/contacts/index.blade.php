@@ -185,7 +185,7 @@
         if (confirm("Tem certeza que deseja excluir este contato?")) {
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-            url: '/contacts/' + contatoId,
+            url: '/contacts/' + id,
             type: 'DELETE',
             dataType: 'json',
             headers: {
