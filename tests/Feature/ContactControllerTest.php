@@ -16,16 +16,19 @@ class ContactControllerTest extends TestCase
     public function it_can_store_a_contact_with_unique_email()
     {
 
+        //email ja existe
         $response = $this->post('/contacts', [
             'nome' => 'Novo Contato',
             'contato' => '123456789',
             'email' => 'rodrigo1254@gmail.com',
         ]);
 
-        //email unico
+
         $response->assertStatus(500)
                  ->assertJson(['status' => false]);
 
+
+        //testando email unico
         $email = 'rodrigo' . rand(0, 100) . '@gmail.com';
         $response = $this->post('/contacts', [
             'nome' => 'Novo Contato aleatorio',
