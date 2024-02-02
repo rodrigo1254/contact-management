@@ -23,7 +23,7 @@ class ContactController extends Controller
         try{
             $request->validate([
                 'nome' => 'required|min:5',
-                'contato' => 'required|digits:9',
+                'contato' => 'required|digits:9|unique:contacts',
                 'email' => 'required|email|unique:contacts',
             ]);
             $contact = Contact::create($request->all());
@@ -52,7 +52,6 @@ class ContactController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
-
         try{
             $request->validate([
                 'nome' => 'required|min:5',
@@ -60,7 +59,7 @@ class ContactController extends Controller
                 'email' => 'required|email|unique:contacts,email,' . $contact->id,
             ]);
             $data = $contact->update($request->all());
-            
+
             return response()->json(['status' => true, 'contact' => $data],200);
         }catch (\Exception $e){
             return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
@@ -69,7 +68,11 @@ class ContactController extends Controller
 
     public function destroy(Contact $contact)
     {
-        $contact->delete();
-        return redirect()->route('contacts.index')->with('success', 'Contato excluído com sucesso!');
+        try{
+            $contact->delete();
+            return response()->json(['status' => true],200);
+        }catch (\Exception $e){
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 }
