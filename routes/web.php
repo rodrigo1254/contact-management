@@ -18,7 +18,13 @@ use App\Http\Controllers\ContactController;
     return view('list');
 });*/
 
-Route::resource('/', ContactController::class);
-
+/* Rota para visualizar a lista de contatos */
 Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
+
+/* Rotas para as operações CRUD de contatos (Create, Read, Update, Delete) */
 Route::resource('contacts', ContactController::class)->except(['index']);
+
+/* Rotas de Autenticação (Opcionais) */
+if (env('ENABLE_AUTH', false)) {
+    Auth::routes();
+}
