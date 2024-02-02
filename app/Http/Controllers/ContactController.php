@@ -60,6 +60,7 @@ class ContactController extends Controller
                 'email' => 'required|email|unique:contacts,email,' . $contact->id,
             ]);
             $data = $contact->update($request->all());
+            
             return response()->json(['status' => true, 'contact' => $data],200);
         }catch (\Exception $e){
             return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
