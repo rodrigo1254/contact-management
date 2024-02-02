@@ -18,6 +18,12 @@ class ContactController extends Controller
         return view('contacts.create');
     }
 
+    /**
+     * Armazena um novo contato
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         try{
@@ -35,6 +41,10 @@ class ContactController extends Controller
         return redirect()->route('contacts.index')->with('success', 'Contato criado com sucesso!');
     }
 
+    /**
+     * exibe contato
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id)
     {
         try{
@@ -50,6 +60,12 @@ class ContactController extends Controller
         return view('contacts.edit', compact('contact'));
     }
 
+    /**
+     * edita um contato
+     *
+     * @param  Contact $contact
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, Contact $contact)
     {
         try{
@@ -66,6 +82,12 @@ class ContactController extends Controller
         }
     }
 
+    /**
+     * exclui um contato
+     *
+     * @param  Contact $contact
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Contact $contact)
     {
         try{
