@@ -171,7 +171,7 @@
                 };
 
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                var url = '/contacts';
+                var url = 'api/contacts';
 
                 var contatoId = $('#contatoId').val();
                 if (contatoId) {
@@ -205,7 +205,7 @@
         function verContato(id) {
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-            url: '/contacts/' + id,
+            url: 'api/contacts/' + id,
             type: 'GET',
             dataType: 'json',
             headers: {
@@ -229,7 +229,7 @@
         function carregarEditarContato(contatoId) {
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-            url: '/contacts/' + contatoId,
+            url: 'api/contacts/' + contatoId,
             type: 'GET',
             dataType: 'json',
             headers: {
@@ -256,7 +256,7 @@
             if (confirm("Tem certeza que deseja excluir este contato?")) {
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
                 $.ajax({
-                url: '/contacts/' + id,
+                url: 'api/contacts/' + id,
                 type: 'DELETE',
                 dataType: 'json',
                 headers: {
