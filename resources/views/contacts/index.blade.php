@@ -55,7 +55,7 @@
                 </div>
                 <div class="modal-body">
                     <!-- Formulário de Login -->
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="">
                         @csrf
                         <div class="form-group">
                             <label for="email">E-mail:</label>
