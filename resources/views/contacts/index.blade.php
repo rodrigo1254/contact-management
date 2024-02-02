@@ -76,7 +76,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="detalhesContato">
+                <div class="modal-body">
                     <!-- Aqui você pode exibir os detalhes do contato -->
                     <p>Nome: <span id="detalhesNome"></span></p>
                     <p>Contato: <span id="detalhesContato"></span></p>
@@ -106,7 +106,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="email">E-mail:</label>
-                            <input autocomplete="off" value="rodrigo1254@gmail.com" type="email" class="form-control" id="email" name="email" placeholder="Digite o e-mail" required>
+                            <input autocomplete="off" value="rodrigo1254@gmail.com" type="email" class="form-control" id="emailLogin" name="email" placeholder="Digite o e-mail" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Senha:</label>
