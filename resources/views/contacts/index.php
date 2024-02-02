@@ -106,12 +106,11 @@
     </div>
 </div>
 
-<!-- Adicione o link para o Bootstrap JS e o Popper.js -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    // Função de exemplo para salvar um novo contato (pode ser substituída por sua lógica real)
+
     function salvarContato() {
         // Validação básica no lado do cliente
         if ($('#formAdicionarContato')[0].checkValidity()) {
