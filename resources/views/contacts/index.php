@@ -82,19 +82,19 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Campos do Formulário -->
-                <form>
+                <!-- Campos do Formulário com validações HTML5 -->
+                <form id="formAdicionarContato">
                     <div class="form-group">
                         <label for="nome">Nome:</label>
-                        <input type="text" class="form-control" id="nome" placeholder="Digite o nome">
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome" required minlength="5">
                     </div>
                     <div class="form-group">
                         <label for="contato">Contato:</label>
-                        <input type="text" class="form-control" id="contato" placeholder="Digite o contato">
+                        <input type="text" class="form-control" id="contato" name="contato" placeholder="Digite o contato" required pattern="\d{9}">
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail:</label>
-                        <input type="email" class="form-control" id="email" placeholder="Digite o e-mail">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Digite o e-mail" required>
                     </div>
                 </form>
             </div>
@@ -110,19 +110,34 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<!-- Modal Editar Contato -->
-<div class="modal fade" id="editarContatoModal" tabindex="-1" role="dialog" aria-labelledby="editarContatoModalLabel" aria-hidden="true">
-    <!-- ... (código do modal de edição de contatos) ... -->
-</div>
-
 <script>
     // Função de exemplo para salvar um novo contato (pode ser substituída por sua lógica real)
     function salvarContato() {
-        // Lógica para salvar o novo contato (pode ser chamada de uma API, por exemplo)
-        alert("Contato salvo com sucesso!");
-        // Feche o modal após salvar
-        $('#adicionarContatoModal').modal('hide');
+        // Validação básica no lado do cliente
+        if ($('#formAdicionarContato')[0].checkValidity()) {
+            // Dados do formulário
+            var dados = {
+                nome: $('#nome').val(),
+                contato: $('#contato').val(),
+                email: $('#email').val()
+            };
+
+            // Requisição Ajax usando jQuery
+            $.ajax({
+                url: '/',
+                type: 'POST',
+                data: dados,
+                success: function (response) {
+                    $('#adicionarContatoModal').modal('hide');
+                },
+                error: function (error) {
+                    alert('Erro ao salvar o contato.');
+                    console.log(error);
+                }
+            });
+        } else {
+            alert('Por favor, preencha todos os campos corretamente.');
+        }
     }
 
     // Função de exemplo para excluir um contato (pode ser substituída por sua lógica real)

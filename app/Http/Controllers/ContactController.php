@@ -20,13 +20,20 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nome' => 'required|min:5',
-            'contato' => 'required|digits:9',
-            'email' => 'required|email|unique:contacts',
-        ]);
+        try{
+            $request->validate([
+                'nome' => 'required|min:5',
+                'contato' => 'required|digits:9',
+                'email' => 'required|email|unique:contacts',
+            ]);
+            $contact = Contact::create($request->all());
+            return response()->json(['status' => true, 'users' => $contact],200);
+        }catch (\Exception $e){
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
+        }
+        
 
-        Contact::create($request->all());
+        
         return redirect()->route('contacts.index')->with('success', 'Contato criado com sucesso!');
     }
 
