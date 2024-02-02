@@ -13,14 +13,9 @@
                 Adicionar Contato
             </button>
             
-            <!-- Botão "Sair" -->
-            <a href="{{ route('logout') }}" class="btn btn-danger ml-2"
-            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a href="#" class="btn btn-danger ml-2" onclick="sair()">
                 Sair
             </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
         @else
             <!-- Botão "Login" -->
             <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#loginModal">
@@ -277,9 +272,8 @@
             var email = $('#emailLogin').val();
             var password = $('#password').val();
 
-            // Requisição AJAX
             $.ajax({
-                url: '/login', // Altere para o endpoint correto
+                url: '/login',
                 type: 'POST',
                 data: {
                     '_token': '{{ csrf_token() }}',
@@ -287,12 +281,27 @@
                     'password': password
                 },
                 success: function(response) {
-                    // Sucesso na autenticação, faça o que for necessário aqui
                     window.location.reload();
                 },
                 error: function(error) {
                     alert('falha na autenticação');
                     $('#loginModal').modal('hide');
+                }
+            });
+        }
+
+        function sair() {
+            $.ajax({
+                url: '/logout',
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    window.location.reload();
+                },
+                error: function(error) {
+                    window.location.reload();
                 }
             });
         }

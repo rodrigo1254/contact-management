@@ -29,6 +29,6 @@ class AuthLoginController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/');
+        return response()->json(['message' => 'Autenticação eliminada'], 200);
     }
 }
