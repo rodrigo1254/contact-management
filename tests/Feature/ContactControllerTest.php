@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Contact;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ContactControllerTest extends TestCase
 {
