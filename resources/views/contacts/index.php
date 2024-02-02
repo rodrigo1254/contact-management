@@ -55,18 +55,18 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Exemplo de Contatos -->
-            <tr class="contato-item">
-                <td>1</td>
-                <td>João Silva</td>
-                <td>987654321</td>
-                <td>joao@example.com</td>
-                <td>
-                    <button class="btn btn-danger" onclick="excluirContato(1)">Excluir</button>
-                    <button class="btn btn-info" data-toggle="modal" data-target="#editarContatoModal">Editar</button>
-                </td>
-            </tr>
-            <!-- Adicione mais linhas conforme necessário -->
+            @foreach ($contacts as $contact)
+                <tr class="contato-item">
+                    <td>{{ $contact->id }}</td>
+                    <td>{{ $contact->name }}</td>
+                    <td>{{ $contact->phone }}</td>
+                    <td>{{ $contact->email }}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="excluirContato({{ $contact->id }})">Excluir</button>
+                        <button class="btn btn-info" onclick="carregarEditarContato({{ $contact->id }})" data-toggle="modal" data-target="#adicionarEditarContatoModal">Editar</button>
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
@@ -106,6 +106,7 @@
     </div>
 </div>
 
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -143,6 +144,30 @@
             alert('Por favor, preencha todos os campos corretamente.');
         }
     }
+
+    function carregarEditarContato(contatoId) {
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+	    $.ajax({
+		url: '/' + contatoId,
+		type: 'GET',
+		dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        },
+		success: function(response) {
+		    $('#contatoId').val(response.id);
+		    $('#nome').val(response.nome);
+            $('#contato').val(response.contato);
+            $('#email').val(response.email);
+
+		    $('#contatoForm button').text('Atualizar');
+		    $('#adicionarEditarContatoModal').modal('show');
+		},
+		error: function(error) {
+		    console.log(error);
+		}
+	    });
+	}
 
     // Função de exemplo para excluir um contato (pode ser substituída por sua lógica real)
     function excluirContato(id) {
