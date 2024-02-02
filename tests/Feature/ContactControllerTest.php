@@ -26,10 +26,10 @@ class ContactControllerTest extends TestCase
         $response->assertStatus(500)
                  ->assertJson(['status' => false]);
 
-        /*// Agora tenta adicionar um contato com e-mail único
+        // Agora tenta adicionar um contato com e-mail único
         $response = $this->post('/contacts', [
-            'nome' => 'Outro Contato',
-            'contato' => '987654321',
+            'nome' => 'João Silva',
+            'contato' => '098765432',
             'email' => 'novoemail@example.com',
         ]);
 
@@ -39,9 +39,9 @@ class ContactControllerTest extends TestCase
 
         // Verifica se o novo contato foi adicionado ao banco de dados
         $this->assertDatabaseHas('contacts', [
-            'nome' => 'Outro Contato',
-            'contato' => '987654321',
+            'nome' => 'João Silva',
+            'contato' => '098765432',
             'email' => 'novoemail@example.com',
-        ]);*/
+        ]);
     }
 }
