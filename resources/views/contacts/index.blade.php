@@ -11,9 +11,21 @@
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adicionarContatoModal">
             Adicionar Contato
         </button>
-        <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#loginModal">
-            Login
-        </button>
+        @if (Auth::check())
+            <!-- Botão "Sair" -->
+            <a href="{{ route('logout') }}" class="btn btn-danger ml-2"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Sair
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        @else
+            <!-- Botão "Login" -->
+            <button type="button" class="btn btn-primary ml-2" data-toggle="modal" data-target="#loginModal">
+                Login
+            </button>
+        @endif
     </div>
 
     <!-- Tabela de Contatos -->

@@ -26,3 +26,5 @@ Route::get('/', [ContactController::class, 'index'])->name('contacts.index');
 Route::resource('contacts', ContactController::class)->except(['index']);
 
 Route::post('/login', [AuthLoginController::class, 'login'])->name('login');
+
+Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');

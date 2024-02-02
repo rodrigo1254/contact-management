@@ -17,12 +17,17 @@ class AuthLoginController extends Controller
             // Exemplo: config(['app.authenticated' => true]);
             return response()->json(['message' => 'Autenticação bem-sucedida'], 200);
             if (Auth::check()) {
-                // Existe alguém logado, você pode fazer algo aqui
-                return response()->json(['message' => 'Autenticação bem-sucedida'], 200);
+                return redirect('/');
             }
         } else {
             // Falha na autenticação
             return redirect()->route('contacts.index')->with('error', 'Credenciais inválidas');
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect('/');
     }
 }
