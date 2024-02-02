@@ -84,6 +84,7 @@
             <div class="modal-body">
                 <!-- Campos do Formulário com validações HTML5 -->
                 <form id="formAdicionarContato">
+                    @csrf
                     <div class="form-group">
                         <label for="nome">Nome:</label>
                         <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome" required minlength="5">
